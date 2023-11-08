@@ -1,0 +1,21 @@
+### Get all shoes
+GET http://localhost:3007/api/shoes
+https://shoes-api-o60a.onrender.com/api/shoes
+
+### Get all shoes for a choosen brand
+GET http://localhost:3007/api/shoes/brand/:brandname
+https://shoes-api-o60a.onrender.com/api/shoes/brand/:brandname
+
+
+### Get all shoes for a choosen size
+GET http://localhost:3007/api/shoes/size/:size
+https://shoes-api-o60a.onrender.com/api/shoes/size/:size
+
+### Get all shoes for a choosen brand and size  
+GET http://localhost:3007/api/shoes/brand/:brandname/size/:size
+https://shoes-api-o60a.onrender.com/api/shoes/brand/:brandname/size/:size
+
+
+### Post update when a shoe is sold
+
+### Post when a new shoe is added
