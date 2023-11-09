@@ -106,6 +106,18 @@ app.get('/api/shoes/brand/:brandname/size/:size', async function (req, res) {
   }
 });
 
+// Define an endpoint to list all shoes for a chosen colour
+app.get('/api/shoes/color/:color', async function (req, res) {
+  try {
+    const shoeColor = req.params.color;
+    const result = await db.any('SELECT * FROM shoes WHERE color = $1', shoeColor);
+    return res.json(result);
+  } catch (error) {
+    console.error('Error fetching shoes by color:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
 // Define an endpoint to update the stock when a shoe is sold 
 app.post('/api/shoes/sold/:id', (req, res) => {
   // try {
