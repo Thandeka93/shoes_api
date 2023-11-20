@@ -84,6 +84,7 @@ app.get('/api/shoes/brand/:brandname/size/:size/color/:color', shoeRoute.filterB
 
 
 
+
 // Define an endpoint to update the stock when a shoe is sold 
 app.post('/api/shoes/sold/:id', (req, res) => {
   // try {
