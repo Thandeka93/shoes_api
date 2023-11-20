@@ -74,7 +74,7 @@ app.get('/api/shoes/brand/:brandname', shoeRoute.filterBrand);
 app.get('/api/shoes/size/:size', shoeRoute.filterSize);
 
 // Define an endpoint to list all shoes for a chosen brand and size
-app.get('/api/shoes/brand/:brandname/size/:size', shoeRoute.filterBrandAndSize);
+// app.get('/api/shoes/brand/:brandname/size/:size', shoeRoute.filterBrandAndSize);
 
 // Define an endpoint to list all shoes for a chosen colour
 app.get('/api/shoes/color/:color',shoeRoute.filterColor);
@@ -101,20 +101,7 @@ app.post('/api/shoes/sold/:id', (req, res) => {
 });
 
 // Define an endpoint to add a new shoe to the stock 
-app.post('/api/shoes', (req, res) => {
-  // try {
-  //   const { color, brand, price, size, in_stock, image_url } = req.body;
-
-  //   // Implement code to insert a new shoe into the database with the provided details.
-  //   // insert a new record into the 'shoes' table.
-
-  //   // Send a success response
-  //   return res.status(201).json({ message: 'Shoe added to stock.' });
-  // } catch (error) {
-  //   console.error('Error adding a new shoe:', error);
-  //   res.status(500).send('Internal Server Error');
-  // }
-});
+app.post('/api/shoes', shoeRoute.addToStock);
 
 // Set the port for the Express server
 const PORT = process.env.PORT || 3007;
