@@ -66,7 +66,6 @@ app.use(cors());
 // Define an endpoint to list all shoes in stock
 app.get('/api/shoes',shoeRoute.allShoesRoutes);
 
-
 // Define an endpoint to list all shoes for a chosen brand
 app.get('/api/shoes/brand/:brandname', shoeRoute.filterBrand);
 
@@ -78,6 +77,12 @@ app.get('/api/shoes/size/:size', shoeRoute.filterSize);
 
 // Define an endpoint to list all shoes for a chosen colour
 app.get('/api/shoes/color/:color',shoeRoute.filterColor);
+
+app.get('/api/shoes/brand/:brandname/size/:size', shoeRoute.filterBrandAndSize);
+
+app.get('/api/shoes/brand/:brandname/color/:color', shoeRoute.filterBrandAndColor);
+
+app.get('/api/shoes/size/:size/color/:color', shoeRoute.filterSizeAndColor);
 
 // Define an endpoint to list all shoes for a chosen brand,size and color
 app.get('/api/shoes/brand/:brandname/size/:size/color/:color', shoeRoute.filterBrandSizeColor);

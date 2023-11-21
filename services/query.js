@@ -36,6 +36,36 @@ export default function shoeApiQuery(db){
         }
       }
 
+      async function getShoesByBrandAndSize(brandName, shoeSize) {
+        try {
+          const result = await db.any('SELECT * FROM shoes WHERE brand = $1 AND size = $2', [brandName, shoeSize]);
+          return result;
+        } catch (error) {
+          console.error('Error fetching shoes by brand, size, and color:', error);
+          throw error;
+        }
+      }
+
+      async function getShoesByBrandAndColor(brandName, shoeColor) {
+        try {
+          const result = await db.any('SELECT * FROM shoes WHERE brand = $1 AND color = $2', [brandName, shoeColor]);
+          return result;
+        } catch (error) {
+          console.error('Error fetching shoes by brand, size, and color:', error);
+          throw error;
+        }
+      }
+
+      async function getShoesBySizeAndColor(shoeSize, shoeColor) {
+        try {
+          const result = await db.any('SELECT * FROM shoes WHERE size = $1 AND color = $2', [shoeSize, shoeColor]);
+          return result;
+        } catch (error) {
+          console.error('Error fetching shoes by brand, size, and color:', error);
+          throw error;
+        }
+      }
+
       async function getShoesByBrandSizeColor(brandName,shoeSize,shoeColor){
         try{
             const result = await db.any('SELECT * FROM shoes WHERE brand = $1 AND size = $2 AND color = $3', [brandName,shoeSize,shoeColor]);
@@ -56,6 +86,9 @@ return{
     getShoesByBrand,
     getShoesBySize,
     getShoesByColor,
+    getShoesByBrandAndSize,
+    getShoesByBrandAndColor,
+    getShoesBySizeAndColor,
     getShoesByBrandSizeColor,
     addShoe
 }
