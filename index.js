@@ -63,51 +63,42 @@ app.use(flash());
 // Enable CORS for cross-origin requests
 app.use(cors());
 
-// Define an endpoint to list all shoes in stock
+// list all shoes in stock
 app.get('/api/shoes',shoeRoute.allShoesRoutes);
 
-// Define an endpoint to list all shoes for a chosen brand
-app.get('/api/shoes/brand/:brandname', shoeRoute.filterBrand);
 
-// Define an endpoint to list all shoes for a chosen size
+// list all shoes for chosen brand
+app.get('/api/shoes/brand/:brandname', shoeRoute.filterBrand
+);
+// // list all shoes for chosen size
 app.get('/api/shoes/size/:size', shoeRoute.filterSize);
 
-// Define an endpoint to list all shoes for a chosen brand and size
-// app.get('/api/shoes/brand/:brandname/size/:size', shoeRoute.filterBrandAndSize);
+// // list all shoes for chosen color
+app.get('/api/shoes/color/:color', shoeRoute.filterColor);
 
-// Define an endpoint to list all shoes for a chosen colour
-app.get('/api/shoes/color/:color',shoeRoute.filterColor);
 
+// // list all shoes for chosen brand and size 
 app.get('/api/shoes/brand/:brandname/size/:size', shoeRoute.filterBrandAndSize);
 
+
+// // list all shoes for chosen brand and color 
 app.get('/api/shoes/brand/:brandname/color/:color', shoeRoute.filterBrandAndColor);
 
+
+// // list all shoes for chosen size and color 
 app.get('/api/shoes/size/:size/color/:color', shoeRoute.filterSizeAndColor);
 
-// Define an endpoint to list all shoes for a chosen brand,size and color
-app.get('/api/shoes/brand/:brandname/size/:size/color/:color', shoeRoute.filterBrandSizeColor);
 
 
+// // list all shoes for chosen brand and size and color
+app.get('/api/shoes/brand/:brandname/size/:size/color/:color', shoeRoute.filterBrandAndSizeAndColor);
 
+//this should update the stock when shoe is sold
+app.post('/api/shoes/sold/:id');
 
-// Define an endpoint to update the stock when a shoe is sold 
-app.post('/api/shoes/sold/:id', (req, res) => {
-  // try {
-  //   const shoeId = req.params.id;
+// add a new shoe to the stock
+app.post('/api/shoes',shoeRoute.addShoe)
 
-  //   // Implement code to update the database to mark the shoe with the given ID as sold.
-  //   // update a 'in stock' column in the 'shoes' table.
-
-  //   // Send a success response
-  //   return res.status(200).json({ message: 'Shoe sold successfully.' });
-  // } catch (error) {
-  //   console.error('Error selling the shoe:', error);
-  //   res.status(500).send('Internal Server Error');
-  // }
-});
-
-// Define an endpoint to add a new shoe to the stock 
-app.post('/api/shoes', shoeRoute.addToStock);
 
 // Set the port for the Express server
 const PORT = process.env.PORT || 3007;
