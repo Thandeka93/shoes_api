@@ -8,8 +8,8 @@ import pgPromise from 'pg-promise';
 import Handlebars from 'handlebars';
 import 'dotenv/config';
 import cors from 'cors';
-import shoeApiQuery from './services/query.js';
-import shoeApiRoutes from './routes/routes.js';
+import ShoeCatalogueAPIRoutes from "./routes/routes.js";
+import ShoeCatalogueAPIServices from "./services/query.js"
 
 // Define the database connection string
 const connectionString = process.env.PGDATABASE_URL ||
@@ -22,8 +22,8 @@ const db = pgp(connectionString);
 // Create an Express application
 const app = express();
 
-const shoeQuery =  shoeApiQuery(db);
-const shoeRoute = shoeApiRoutes(shoeQuery);
+const shoeCatalogueAPIServices = ShoeCatalogueAPIServices(db);
+const shoeCatalogueAPIRoutes = ShoeCatalogueAPIRoutes(shoeCatalogueAPIServices);
 
 // Set up Handlebars as the template engine
 app.engine(
@@ -63,42 +63,25 @@ app.use(flash());
 // Enable CORS for cross-origin requests
 app.use(cors());
 
-// list all shoes in stock
-app.get('/api/shoes',shoeRoute.allShoesRoutes);
+app.get("/api/shoes", shoeCatalogueAPIRoutes.getAllShoes)
 
+app.get("/api/shoes/brand/:brandname", shoeCatalogueAPIRoutes.getShoesByBrand)
 
-// list all shoes for chosen brand
-app.get('/api/shoes/brand/:brandname', shoeRoute.filterBrand
-);
-// // list all shoes for chosen size
-app.get('/api/shoes/size/:size', shoeRoute.filterSize);
+app.get("/api/shoes/size/:size", shoeCatalogueAPIRoutes.getShoesBySize)
 
-// // list all shoes for chosen color
-app.get('/api/shoes/color/:color', shoeRoute.filterColor);
+app.get("/api/shoes/brand/:brandname/size/:size", shoeCatalogueAPIRoutes.getShoesByBrandAndSize)
 
+app.get("/api/shoes/colour/:colour", shoeCatalogueAPIRoutes.getShoesByColour)
 
-// // list all shoes for chosen brand and size 
-app.get('/api/shoes/brand/:brandname/size/:size', shoeRoute.filterBrandAndSize);
+app.get("/api/shoes/brand/:brandname/colour/:colour", shoeCatalogueAPIRoutes.getShoesByBrandAndColour)
 
+app.get("/api/shoes/brand/:brandname/colour/:colour/size/:size", shoeCatalogueAPIRoutes.getShoesByBrandAndColourAndSize)
 
-// // list all shoes for chosen brand and color 
-app.get('/api/shoes/brand/:brandname/color/:color', shoeRoute.filterBrandAndColor);
+app.get("/api/shoes/colour/:colour/size/:size", shoeCatalogueAPIRoutes.getShoesByColourAndSize)
 
+app.post("/api/shoes/sold/:id", shoeCatalogueAPIRoutes.updateShoeStock)
 
-// // list all shoes for chosen size and color 
-app.get('/api/shoes/size/:size/color/:color', shoeRoute.filterSizeAndColor);
-
-
-
-// // list all shoes for chosen brand and size and color
-app.get('/api/shoes/brand/:brandname/size/:size/color/:color', shoeRoute.filterBrandAndSizeAndColor);
-
-//this should update the stock when shoe is sold
-app.post('/api/shoes/sold/:id');
-
-// add a new shoe to the stock
-app.post('/api/shoes',shoeRoute.addShoe)
-
+app.post("/api/shoes", shoeCatalogueAPIRoutes.addNewShoe)
 
 // Set the port for the Express server
 const PORT = process.env.PORT || 3007;

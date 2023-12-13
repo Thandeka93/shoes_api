@@ -1,103 +1,155 @@
-export default function shoeApiQuery(db) {
+export default function ShoeCatalogueAPIServices(db) {
+  async function getListOfShoes() {
+      const getShoeListQuery = `SELECT * FROM shoes ORDER BY id;`
 
-  async function getAllShoes() {
+      const shoeList = await db.many(getShoeListQuery)
 
-    const result = await db.any('SELECT * FROM shoes');
-    return result;
+      return shoeList;
   }
 
-  async function getShoesByBrand(brandName) {
-    try {
-      const result = await db.many('SELECT * FROM shoes WHERE brand = $1', brandName);
-      return result;
-    } catch (error) {
-      console.error('Error fetching shoes by brand:', error);
-      throw error;
-    }
+  async function getListOfShoesByBrand(brand) {
+
+      const shoeList = await getListOfShoes();
+
+      let modifiedString;
+
+      if (brand.includes(" ")) {
+          modifiedString = brand.replaceAll(" ").toUpperCase();
+      } else {
+          modifiedString = brand.toUpperCase();
+      }
+
+      const filteredList = await shoeList.filter(item => item.brand === modifiedString)
+
+      return filteredList;
   }
 
-  async function getShoesBySize(shoeSize) {
-    try {
-      const result = await db.any('SELECT * FROM shoes WHERE size = $1', shoeSize);
-      return result;
-    } catch (error) {
-      console.error('Error fetching shoes by brand:', error);
-      throw error;
-    }
-  }
-  async function getShoesByColor(shoeColor) {
-    try {
-      const result = await db.any('SELECT * FROM shoes WHERE color = $1', shoeColor);
-      return result;
-    } catch (error) {
-      console.error('Error fetching shoes by brand:', error);
-      throw error;
-    }
+  async function getListOfShoesBySize(size) {
+
+      const shoeList = await getListOfShoes();
+
+      const filteredList = await shoeList.filter(item => item.size === Number(size))
+
+      return filteredList;
   }
 
+  async function getListOfShoesByBrandAndSize(brand, size) {
+      const shoeList = await getListOfShoes();
 
-  async function getShoesByBrandAndSize(brandName, shoeSize) {
-    try {
-      const result = await db.any('SELECT * FROM shoes WHERE brand = $1 AND size = $2', [brandName, shoeSize]);
-      return result;
-    } catch (error) {
-      console.error('Error fetching shoes by brand, size, and color:', error);
-      throw error;
-    }
+      let modifiedString;
+
+      if (brand.includes("-")) {
+          modifiedString = brand.replaceAll("-", " ").toUpperCase();
+      } else {
+          modifiedString = brand.toUpperCase();
+      }
+
+      const filteredList = await shoeList.filter(item => item.brand === modifiedString && item.size === Number(size))
+
+      return filteredList;
   }
 
-  async function getShoesByBrandAndColor(brandName, shoeColor) {
-    try {
-      const result = await db.any('SELECT * FROM shoes WHERE brand = $1 AND color = $2', [brandName, shoeColor]);
-      return result;
-    } catch (error) {
-      console.error('Error fetching shoes by brand, size, and color:', error);
-      throw error;
-    }
+  async function getListOfShoesByColour(colour) {
+      const shoeList = await getListOfShoes();
+
+      let modifiedString;
+
+      if (colour.includes("-")) {
+          modifiedString = colour.replaceAll("-", " ").toLowerCase();
+      } else {
+          modifiedString = colour.toLowerCase();
+      }
+
+      const filteredList = await shoeList.filter(item => item.colour.toLowerCase() === modifiedString)
+
+      return filteredList;
   }
 
+  async function getListOfShoesByBrandAndColour(brand, colour) {
+      const shoeList = await getListOfShoes();
 
+      let modifiedStringBrand;
+      let modifiedStringColour;
 
-  async function getShoesBySizeAndColor(shoeSize, shoeColor) {
-    try {
-      const result = await db.any('SELECT * FROM shoes WHERE size = $1 AND color = $2', [shoeSize, shoeColor]);
-      return result;
-    } catch (error) {
-      console.error('Error fetching shoes by brand, size, and color:', error);
-      throw error;
-    }
+      if (brand.includes("-")) {
+          modifiedStringBrand = brand.replaceAll("-", " ").toUpperCase();
+      } else {
+          modifiedStringBrand = brand.toUpperCase();
+      }
+
+      if (colour.includes("-")) {
+          modifiedStringColour = colour.replaceAll("-", " ").toLowerCase();
+      } else {
+          modifiedStringColour = colour.toLowerCase();
+      }
+
+      const filteredList = await shoeList.filter(item => item.brand === modifiedStringBrand && item.colour.toLowerCase() === modifiedStringColour)
+
+      return filteredList;
   }
 
-  async function getShoesByBrandAndSizeAndColor(brandName,shoeSize, shoeColor) {
-    try {
-      const result = await db.any('SELECT * FROM shoes WHERE brand = $1 AND size = $2 AND color = $3', [brandName,shoeSize, shoeColor]);
-      return result;
-    } catch (error) {
-      console.error('Error fetching shoes by brand, size, and color:', error);
-      throw error;
-    }
+  async function getListOfShoesByBrandAndColourAndSize(brand, colour, size) {
+      const shoeList = await getListOfShoes();
+
+      let modifiedStringBrand;
+      let modifiedStringColour;
+
+      if (brand.includes("-")) {
+          modifiedStringBrand = brand.replaceAll("-", " ").toUpperCase();
+      } else {
+          modifiedStringBrand = brand.toUpperCase();
+      }
+
+      if (colour.includes("-")) {
+          modifiedStringColour = colour.replaceAll("-", " ").toLowerCase();
+      } else {
+          modifiedStringColour = colour.toLowerCase();
+      }
+
+      const filteredList = await shoeList.filter(item => item.brand === modifiedStringBrand && item.colour.toLowerCase() === modifiedStringColour && item.size === Number(size))
+
+      return filteredList;
   }
 
-  
-  
-  async function addShoeToStock(shoeInfo) {
-    const query = 'INSERT INTO shoes(color, brand, price, size, in_stock, image_url) VALUES($1, $2, $3, $4, $5, $6)';
-    await db.none(query, shoeInfo);
+  async function getListOfShoesByColourAndSize(colour, size) {
+      const shoeList = await getListOfShoes();
+
+      let modifiedStringColour;
+
+      if (colour.includes("-")) {
+          modifiedStringColour = colour.replaceAll("-", " ").toLowerCase();
+      } else {
+          modifiedStringColour = colour.toLowerCase();
+      }
+
+      const filteredList = await shoeList.filter(item => item.colour.toLowerCase() === modifiedStringColour && item.size === Number(size))
+
+      return filteredList;
   }
 
+  async function updateStock(shoeId, total) {
+      const updateStockQuery = `UPDATE shoes SET in_stock = in_stock - $2 WHERE id = $1;`
 
+      await db.none(updateStockQuery, [shoeId, total]);
+  }
 
+  async function addShoe(name, brand, colour, size, price, in_stock, img_src) {
+      const addShoeQuery = `INSERT INTO shoes (name, brand, colour, size, price, in_stock, img_src)
+      VALUES ($1, $2, $3, $4, $5, $6, $7);`
+
+      await db.none(addShoeQuery, [name, brand, colour, size, price, in_stock, img_src])
+  }
 
   return {
-    getAllShoes,
-    getShoesByBrand,
-    getShoesBySize,
-    getShoesByColor,
-    getShoesByBrandAndSize,
-    getShoesByBrandAndColor,
-    getShoesBySizeAndColor,
-    getShoesByBrandAndSizeAndColor,
-    addShoeToStock
+      getListOfShoes,
+      getListOfShoesByBrand,
+      getListOfShoesBySize,
+      getListOfShoesByBrandAndSize,
+      getListOfShoesByColour,
+      getListOfShoesByBrandAndColour,
+      getListOfShoesByBrandAndColourAndSize,
+      getListOfShoesByColourAndSize,
+      updateStock,
+      addShoe
   }
-
 }
