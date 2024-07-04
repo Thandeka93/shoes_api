@@ -6,7 +6,7 @@ VALUES
     ('Vogue stilettos', 'LODI', 'Green', 4, 649, 3, '/images/shoes/green1.jpg'),
     ('Sole sculpt', 'LUXE', 'Black', 6, 664, 7, '/images/shoes/black2.jpg'),
     ('Enchant heels', 'LUXE', 'Blue', 5, 559, 14, '/images/shoes/blue1.jpg'),
-    ('Posh pumps', 'LUXE', 'Grey', 9, 649, 4, '/images/shoes/grey2.jpg'),
+    ('Posh pumps', 'LUXE', 'Grey', 4, 649, 4, '/images/shoes/grey2.jpg'),
     ('Radiant strides', 'LUXE', 'Orange', 5, 799, 9, '/images/shoes/orange1.jpg'),
     ('Allure heels', 'STILETTOS', 'Grey', 6, 899, 11, '/images/shoes/grey3.jpg'),
     ('Graceful gait', 'STILETTOS', 'Black', 5, 899, 5, '/images/shoes/black3.jpg'),
